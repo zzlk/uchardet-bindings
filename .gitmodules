@@ -1,0 +1,3 @@
+[submodule "uchardet"]
+	path = uchardet
+	url = git@github.com:zzlk/uchardet.git
