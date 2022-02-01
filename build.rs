@@ -12,7 +12,7 @@ fn main() {
         "cargo:rustc-link-search=native={}",
         Path::new(&dir).join("uchardet/src").display()
     );
-    println!("cargo:rustc-link-lib=uchardet");
+    println!("cargo:rustc-link-lib=static=uchardet");
     // println!("cargo:rustc-link-lib=storm");
     // println!("cargo:rustc-link-lib=bz2");
     // println!("cargo:rustc-link-lib=z");
