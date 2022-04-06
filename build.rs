@@ -3,8 +3,26 @@ extern crate bindgen;
 use std::env;
 use std::path::Path;
 use std::path::PathBuf;
+use std::process::Command;
 
 fn main() {
+    Command::new("cmake")
+    .current_dir("uchardet")
+    .args(&["CMakeLists.txt"])
+    .status()
+    .expect("failed to cmake");
+
+    Command::new("make")
+    .current_dir("uchardet")
+    // .env("LUA_DIR", lua_dir)
+    .status()
+    .expect("failed to make!");
+
+    // Tell cargo to invalidate the built crate whenever the wrapper changes
+    println!("cargo:rerun-if-changed=src/wrapper.hpp");
+    println!("cargo:rerun-if-changed=uchardet");
+    println!("cargo:rerun-if-changed=uchardet/libuchardet.a");
+
     // Tell cargo to tell rustc to link the system bzip2
     // shared library.
     let dir = env::var("CARGO_MANIFEST_DIR").unwrap();
@@ -13,13 +31,6 @@ fn main() {
         Path::new(&dir).join("uchardet/src").display()
     );
     println!("cargo:rustc-link-lib=static=uchardet");
-    // println!("cargo:rustc-link-lib=storm");
-    // println!("cargo:rustc-link-lib=bz2");
-    // println!("cargo:rustc-link-lib=z");
-    // println!("cargo:rustc-link-lib=stdc++");
-
-    // Tell cargo to invalidate the built crate whenever the wrapper changes
-    println!("cargo:rerun-if-changed=src/wrapper.hpp");
 
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
