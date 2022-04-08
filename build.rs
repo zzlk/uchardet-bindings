@@ -6,17 +6,19 @@ use std::path::PathBuf;
 use std::process::Command;
 
 fn main() {
-    Command::new("cmake")
+    assert!(Command::new("cmake")
     .current_dir("uchardet")
     .args(&["CMakeLists.txt"])
     .status()
-    .expect("failed to cmake");
+    .expect("failed to cmake")
+    .success());
 
-    Command::new("make")
+    assert!(Command::new("make")
     .current_dir("uchardet")
     // .env("LUA_DIR", lua_dir)
     .status()
-    .expect("failed to make!");
+    .expect("failed to make!")
+    .success());
 
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed=src/wrapper.hpp");
