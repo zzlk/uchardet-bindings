@@ -7,18 +7,18 @@ use std::process::Command;
 
 fn main() {
     assert!(Command::new("cmake")
-    .current_dir("uchardet")
-    .args(&["CMakeLists.txt"])
-    .status()
-    .expect("failed to cmake")
-    .success());
+        .current_dir("uchardet")
+        .args(&["CMakeLists.txt"])
+        .status()
+        .expect("failed to cmake")
+        .success());
 
     assert!(Command::new("make")
-    .current_dir("uchardet")
-    // .env("LUA_DIR", lua_dir)
-    .status()
-    .expect("failed to make!")
-    .success());
+        .current_dir("uchardet")
+        // .env("LUA_DIR", lua_dir)
+        .status()
+        .expect("failed to make!")
+        .success());
 
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed=src/wrapper.hpp");
