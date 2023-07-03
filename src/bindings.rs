@@ -4,6 +4,5 @@
 #![allow(improper_ctypes)]
 #![allow(dead_code)]
 #![allow(deref_nullptr)]
-#![allow(unaligned_references)]
 
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
